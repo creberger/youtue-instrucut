@@ -3,161 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Website</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9f9f9; color: #222; line-height: 1.6; }
-    header { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-    header h1 { font-size: 1.2rem; font-weight: 600; }
-    nav a { margin-left: 1.5rem; text-decoration: none; color: #555; font-size: 0.95rem; }
-    nav a:hover { color: #000; }
-    .hero { text-align: center; padding: 4rem 2rem 2rem; }
-    .hero h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
-    .hero p { font-size: 1.1rem; color: #666; max-width: 500px; margin: 0 auto 2rem; }
-    .python-section { max-width: 700px; margin: 2rem auto 4rem; padding: 0 2rem; }
-    .python-section h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
-    .python-section p { color: #666; font-size: 0.95rem; margin-bottom: 1.25rem; }
-    .input-row { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
-    .input-row input { flex: 1; padding: 0.65rem 1rem; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; outline: none; }
-    .input-row input:focus { border-color: #888; }
-    .input-row button { padding: 0.65rem 1.25rem; background: #222; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem; transition: background 0.2s; }
-    .input-row button:hover { background: #444; }
-    .input-row button:disabled { background: #aaa; cursor: not-allowed; }
-    .output-box { background: #1e1e1e; color: #d4d4d4; font-family: 'Courier New', monospace; font-size: 0.9rem; padding: 1rem 1.25rem; border-radius: 8px; min-height: 80px; white-space: pre-wrap; line-height: 1.6; }
-    .output-box .prompt { color: #888; }
-    .output-box .result { color: #9cdcfe; }
-    .output-box .error { color: #f48771; }
-    .output-box .loading { color: #888; font-style: italic; }
-    .examples { margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
-    .examples span { font-size: 0.8rem; color: #888; }
-    .example-btn { font-size: 0.8rem; padding: 0.3rem 0.75rem; background: #fff; border: 1px solid #ddd; border-radius: 20px; cursor: pointer; color: #444; transition: background 0.15s; }
-    .example-btn:hover { background: #f0f0f0; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 0 auto 5rem; padding: 0 2rem; }
-    .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 1.5rem; }
-    .card h3 { margin-bottom: 0.5rem; font-size: 1rem; }
-    .card p { font-size: 0.9rem; color: #666; }
-    footer { text-align: center; padding: 2rem; font-size: 0.85rem; color: #aaa; border-top: 1px solid #e5e5e5; }
-  </style>
-</head>
-<body>
-
-  <header>
-    <h1>MySite</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <h2>Welcome to my HHHH website</h2>
-    <p>A clean, simple starting point hosted for free on GitHub Pages.</p>
-  </section>
-
-  <div class="python-section">
-    <h3>Python playground</h3>
-    <p>Type any Python expression or statement and run it live in your browser.</p>
-    <div class="input-row">
-      <input type="text" id="py-input" placeholder='e.g. print("Hello, world!")' />
-      <button id="run-btn" onclick="runPython()" disabled>Loading...</button>
-    </div>
-    <div class="output-box" id="output">
-      <span class="loading">Loading Python... (first load may take a few seconds)</span>
-    </div>
-    <div class="examples">
-      <span>Try:</span>
-      <button class="example-btn" onclick="setExample('2 ** 10')">2 ** 10</button>
-      <button class="example-btn" onclick="setExample('[x**2 for x in range(10)]')">[x**2 for x in range(10)]</button>
-      <button class="example-btn" onclick="setExample('import math\nmath.pi * 5**2')">circle area</button>
-    </div>
-  </div>
-
-  <div class="cards">
-    <div class="card">
-      <h3>Feature one</h3>
-      <p>Describe what makes your site or project special right here.</p>
-    </div>
-    <div class="card">
-      <h3>Feature two</h3>
-      <p>Add another highlight or section that matters to your visitors.</p>
-    </div>
-    <div class="card">
-      <h3>Feature three</h3>
-      <p>Keep it simple — you can always build on top of this later.</p>
-    </div>
-  </div>
-
-  <footer>
-    &copy; 2026 MySite — hosted on GitHub Pages
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
-  <script>
-    let pyodide = null;
-    let outputLines = [];
-
-    async function loadPy() {
-      pyodide = await loadPyodide();
-      pyodide.runPython(`
-import sys, io
-class _Cap(io.StringIO): pass
-sys.stdout = _Cap()
-sys.stderr = _Cap()
-      `);
-      document.getElementById('run-btn').disabled = false;
-      document.getElementById('run-btn').textContent = 'Run';
-      document.getElementById('output').innerHTML = '<span class="prompt">Ready. Enter some Python above and press Run.</span>';
-    }
-
-    function setExample(code) {
-      document.getElementById('py-input').value = code;
-      document.getElementById('py-input').focus();
-    }
-
-    function escHtml(s) {
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
-
-    async function runPython() {
-      if (!pyodide) return;
-      const code = document.getElementById('py-input').value.trim();
-      if (!code) return;
-      outputLines.push(`<span class="prompt">&gt;&gt;&gt; ${escHtml(code)}</span>`);
-      try {
-        pyodide.runPython('sys.stdout.truncate(0); sys.stdout.seek(0); sys.stderr.truncate(0); sys.stderr.seek(0)');
-        let codeToRun = code;
-        if (code.includes('input(')) {
-          const m = code.match(/input\(["'](.+?)["']\)/);
-          const label = m ? m[1] : 'Enter value:';
-          const val = window.prompt(label) ?? '';
-          pyodide.globals.set('_input_val', val);
-          codeToRun = code.replace(/input\([^)]*\)/, '_input_val');
-        }
-        let result = await pyodide.runPythonAsync(codeToRun);
-        const printed = pyodide.runPython('sys.stdout.getvalue()').trim();
-        if (printed) printed.split('\n').forEach(l => outputLines.push(`<span class="result">${escHtml(l)}</span>`));
-        if (result !== undefined && result !== null && String(result) !== 'None') {
-          outputLines.push(`<span class="result">${escHtml(String(result))}</span>`);
-        }
-      } catch(err) {
-        const msg = err.message.split('\n').pop() || err.message;
-        outputLines.push(`<span class="error">${escHtml(msg)}</span>`);
-      }
-      document.getElementById('output').innerHTML = outputLines.slice(-20).join('\n') || '<span class="prompt">No output.</span>';
-    }
-
-    document.getElementById('py-input').addEventListener('keydown', e => { if (e.key === 'Enter') runPython(); });
-    loadPy();
-  </script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Website</title>
+  <title>Collatz Conjecture</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -166,83 +12,162 @@ sys.stderr = _Cap()
       background: #f9f9f9;
       color: #222;
       line-height: 1.6;
+      min-height: 100vh;
     }
 
     header {
       background: #fff;
       border-bottom: 1px solid #e5e5e5;
       padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
     header h1 { font-size: 1.2rem; font-weight: 600; }
 
-    nav a {
-      margin-left: 1.5rem;
-      text-decoration: none;
-      color: #555;
-      font-size: 0.95rem;
-    }
-
-    nav a:hover { color: #000; }
-
-    .hero {
-      text-align: center;
-      padding: 5rem 2rem;
-    }
-
-    .hero h2 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      color: #666;
-      max-width: 500px;
-      margin: 0 auto 2rem;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.75rem;
-      background: #222;
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: background 0.2s;
-    }
-
-    .btn:hover { background: #444; }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      max-width: 900px;
-      margin: 0 auto 5rem;
+    .container {
+      max-width: 680px;
+      margin: 3rem auto;
       padding: 0 2rem;
     }
 
-    .card {
+    .intro {
+      margin-bottom: 2rem;
+    }
+
+    .intro h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .intro p {
+      color: #555;
+      font-size: 0.97rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .rule {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 0.85rem 1.1rem;
+      font-size: 0.9rem;
+      color: #444;
+      margin-top: 1rem;
+    }
+
+    .rule strong { color: #222; }
+
+    .input-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .input-row input {
+      flex: 1;
+      padding: 0.7rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .input-row input:focus { border-color: #555; }
+
+    .input-row button {
+      padding: 0.7rem 1.5rem;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .input-row button:hover { background: #444; }
+    .input-row button:disabled { background: #aaa; cursor: not-allowed; }
+
+    .status {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 1.25rem;
+      min-height: 1.2rem;
+    }
+
+    /* Result card */
+    .result-card {
       background: #fff;
       border: 1px solid #e5e5e5;
       border-radius: 10px;
       padding: 1.5rem;
+      display: none;
     }
 
-    .card h3 { margin-bottom: 0.5rem; font-size: 1rem; }
-    .card p  { font-size: 0.9rem; color: #666; }
+    .result-card.visible { display: block; }
+
+    .result-card.success { border-left: 4px solid #22c55e; }
+    .result-card.error   { border-left: 4px solid #ef4444; }
+
+    .verdict {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .verdict.ok  { color: #16a34a; }
+    .verdict.err { color: #dc2626; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .stat {
+      background: #f9f9f9;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .seq-label {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 0.4rem;
+    }
+
+    .sequence {
+      background: #f3f4f6;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: #374151;
+      word-break: break-all;
+      line-height: 1.8;
+    }
 
     footer {
       text-align: center;
       padding: 2rem;
-      font-size: 0.85rem;
-      color: #aaa;
+      font-size: 0.82rem;
+      color: #bbb;
+      margin-top: 4rem;
       border-top: 1px solid #e5e5e5;
     }
   </style>
@@ -250,38 +175,132 @@ sys.stderr = _Cap()
 <body>
 
   <header>
-    <h1>MySite</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
+    <h1>Collatz Conjecture</h1>
   </header>
 
-  <section class="hero">
-    <h2>Welcome to my website</h2>
-    <p>A clean, simple starting point hosted for free on GitHub Pages.</p>
-    <a href="#" class="btn">Get started</a>
-  </section>
+  <div class="container">
 
-  <div class="cards">
-    <div class="card">
-      <h3>Feature one</h3>
-      <p>Describe what makes your site or project special right here.</p>
+    <div class="intro">
+      <h2>Does your number reach 1?</h2>
+      <p>
+        The Collatz conjecture is one of mathematics' most famous unsolved problems.
+        It claims that for <em>any</em> positive integer, the sequence below will always eventually reach 1.
+      </p>
+      <div class="rule">
+        <strong>If the number is even</strong> → divide by 2 &nbsp;|&nbsp;
+        <strong>If the number is odd</strong> → multiply by 3 and add 1 &nbsp;|&nbsp;
+        <strong>Repeat</strong> until you reach 1
+      </div>
     </div>
-    <div class="card">
-      <h3>Feature two</h3>
-      <p>Add another highlight or section that matters to your visitors.</p>
+
+    <div class="input-row">
+      <input
+        type="number"
+        id="num-input"
+        placeholder="Enter a positive integer…"
+        min="1"
+        step="1"
+      />
+      <button id="run-btn" onclick="runCollatz()" disabled>Loading…</button>
     </div>
-    <div class="card">
-      <h3>Feature three</h3>
-      <p>Keep it simple — you can always build on top of this later.</p>
+
+    <div class="status" id="status">Loading Python engine — please wait…</div>
+
+    <div class="result-card" id="result-card">
+      <div class="verdict" id="verdict"></div>
+      <div class="stats" id="stats"></div>
+      <div class="seq-label">Sequence</div>
+      <div class="sequence" id="sequence"></div>
     </div>
+
   </div>
 
-  <footer>
-    &copy; 2026 MySite — hosted on GitHub Pages
-  </footer>
+  <footer>Built with Python + Pyodide &mdash; runs entirely in your browser</footer>
+
+  <!-- Pyodide: Python in the browser -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+  <script>
+    let pyodide = null;
+
+    async function init() {
+      pyodide = await loadPyodide();
+
+      // Fetch and run collatz.py (must be in the same folder as index.html)
+      const response = await fetch('./collatz.py');
+      const code = await response.text();
+      pyodide.runPython(code);
+
+      document.getElementById('run-btn').disabled = false;
+      document.getElementById('run-btn').textContent = 'Check';
+      document.getElementById('status').textContent = 'Ready! Enter any positive integer above.';
+    }
+
+    async function runCollatz() {
+      const raw = document.getElementById('num-input').value.trim();
+      const card = document.getElementById('result-card');
+      card.className = 'result-card';
+
+      if (!raw || isNaN(raw) || Number(raw) <= 0 || !Number.isInteger(Number(raw))) {
+        document.getElementById('status').textContent = 'Please enter a positive whole number.';
+        return;
+      }
+
+      const n = parseInt(raw, 10);
+      document.getElementById('status').textContent = `Checking ${n.toLocaleString()}…`;
+
+      try {
+        pyodide.globals.set('_n', n);
+        const resultProxy = pyodide.runPython('check_collatz(_n)');
+        const result = resultProxy.toJs({ dict_converter: Object.fromEntries });
+        resultProxy.destroy();
+
+        // Sequence array
+        const seq = Array.isArray(result.sequence)
+          ? result.sequence
+          : [...result.sequence];
+
+        // Render
+        document.getElementById('verdict').textContent =
+          `✓ ${n.toLocaleString()} satisfies the Collatz conjecture!`;
+        document.getElementById('verdict').className = 'verdict ok';
+
+        document.getElementById('stats').innerHTML = `
+          <div class="stat">
+            <div class="stat-label">Starting number</div>
+            <div class="stat-value">${n.toLocaleString()}</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Steps to reach 1</div>
+            <div class="stat-value">${result.steps.toLocaleString()}</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Peak value</div>
+            <div class="stat-value">${result.peak.toLocaleString()}</div>
+          </div>
+        `;
+
+        document.getElementById('sequence').textContent = seq.join(' → ');
+        card.className = 'result-card visible success';
+        document.getElementById('status').textContent = '';
+
+      } catch (err) {
+        const msg = err.message.split('\n').filter(l => l.trim()).pop() || err.message;
+        document.getElementById('verdict').textContent = '✗ ' + msg;
+        document.getElementById('verdict').className = 'verdict err';
+        document.getElementById('stats').innerHTML = '';
+        document.getElementById('sequence').textContent = '';
+        card.className = 'result-card visible error';
+        document.getElementById('status').textContent = '';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('num-input')
+        .addEventListener('keydown', e => { if (e.key === 'Enter') runCollatz(); });
+    });
+
+    init();
+  </script>
 
 </body>
 </html>
